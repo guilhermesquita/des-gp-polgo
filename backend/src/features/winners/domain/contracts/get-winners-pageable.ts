@@ -26,10 +26,14 @@ export namespace GetWinnersPageable {
   };
 
   export type Result = {
-    items: IWinner[];
-    totalPages: number;
-    totalItems: number;
-    orderBy: string;
-    order: string;
+    data: IWinner[];
+    pagination: {
+      totalPages: number;
+      total: number;
+      page: number;
+      limit: number;
+    };
+    sucess: boolean;
+    message: string;
   };
 }

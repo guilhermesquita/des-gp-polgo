@@ -28,16 +28,20 @@ export class WinnerRepository implements GetWinnersPageable {
       .limit(limit)
       .lean();
 
-    const totalItems = await winnerModel.countDocuments(query);
+    const total = await winnerModel.countDocuments(query);
 
-    const totalPages = Math.ceil(totalItems / limit);
+    const totalPages = Math.ceil(total / limit);
 
     return {
-      items: winners,
-      totalItems,
-      totalPages,
-      orderBy,
-      order,
+      sucess: true,
+      data: winners,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages,
+      },
+      message: "Dados recuperados com sucesso",
     };
   }
 }
