@@ -1,0 +1,32 @@
+# Node modules
+front/node_modules/
+back/node_modules/
+
+# Build/dist
+front/dist/
+back/dist/
+front/build/
+back/build/
+
+# Env files
+*.env
+front/.env.local
+back/.env.local
+
+# Logs
+*.log
+front/logs/
+back/logs/
+
+# VSCode
+.vscode/
+
+# Coverage
+front/coverage/
+back/coverage/
+
+# MacOS
+.DS_Store
+
+# Optional caches
+.cache/
