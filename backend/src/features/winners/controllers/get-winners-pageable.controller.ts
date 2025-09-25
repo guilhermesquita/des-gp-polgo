@@ -1,16 +1,5 @@
 import { Request, Response } from "express";
-import winnerModel from "../domain/model/winner.model";
 import { GetWinnersPageable } from "../domain/contracts/get-winners-pageable";
-
-export const getWinners = async (_req: Request, res: Response) => {
-  try {
-    const winners = await winnerModel.find().lean();
-    res.json(winners);
-  } catch (err) {
-    console.error("Error fetching winners:", err);
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
 
 export class GetWinnerController {
   constructor(readonly getWinners: GetWinnersPageable) {}

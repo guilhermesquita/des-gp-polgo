@@ -1,7 +1,12 @@
+import { CreateWinner } from "../domain/contracts/create-winner";
 import { GetWinnersPageable } from "../domain/contracts/get-winners-pageable";
+import { UpdateWinner } from "../domain/contracts/update-winner";
+import { DeleteWinner } from "../domain/contracts/delete-winner";
 import winnerModel from "../domain/model/winner.model";
 
-export class WinnerRepository implements GetWinnersPageable {
+export class WinnerRepository
+  implements GetWinnersPageable, CreateWinner, UpdateWinner, DeleteWinner
+{
   async pageable(
     params: GetWinnersPageable.Params
   ): Promise<GetWinnersPageable.Result> {
@@ -43,5 +48,53 @@ export class WinnerRepository implements GetWinnersPageable {
       },
       message: "Dados recuperados com sucesso",
     };
+  }
+
+  async create(params: CreateWinner.Params): Promise<CreateWinner.Result> {
+    await winnerModel.create({
+      nome: params.nome,
+      estado: params.estado,
+      cidade: params.cidade,
+      premio: params.premio,
+      data: params.data,
+    });
+
+    return {
+      sucess: true,
+      message: "Dados criados com sucesso",
+    };
+  }
+
+  async update(params: UpdateWinner.Params): Promise<UpdateWinner.Result> {
+    const { id, nome, estado, cidade, premio, data } = params;
+
+    const updateData: any = {};
+    if (nome !== undefined) updateData.nome = nome;
+    if (estado !== undefined) updateData.estado = estado;
+    if (cidade !== undefined) updateData.cidade = cidade;
+    if (premio !== undefined) updateData.premio = premio;
+    if (data !== undefined) updateData.data = data;
+
+    const updated = await winnerModel.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+
+    if (!updated) {
+      return { sucess: false, message: "Registro não encontrado" };
+    }
+
+    return { sucess: true, message: "Dados atualizados com sucesso" };
+  }
+
+  async delete(params: DeleteWinner.Params): Promise<DeleteWinner.Result> {
+    const { id } = params;
+
+    const deleted = await winnerModel.findByIdAndDelete(id).lean();
+
+    if (!deleted) {
+      return { sucess: false, message: "Registro não encontrado" };
+    }
+
+    return { sucess: true, message: "Registro removido com sucesso" };
   }
 }
