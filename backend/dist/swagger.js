@@ -14,6 +14,49 @@ exports.swaggerSpec = (0, swagger_jsdoc_1.default)({
             description: "API documentation for Polgo backend",
         },
         servers: [{ url: "http://localhost:3000", description: "Local server" }],
+        components: {
+            schemas: {
+                Winner: {
+                    type: "object",
+                    properties: {
+                        _id: { type: "string" },
+                        nome: { type: "string" },
+                        estado: { type: "string" },
+                        cidade: { type: "string" },
+                        premio: { type: "string" },
+                        data: { type: "string", format: "date-time" },
+                        createdAt: { type: "string", format: "date-time" },
+                        updatedAt: { type: "string", format: "date-time" },
+                    },
+                    required: ["nome", "estado", "cidade", "premio", "data"],
+                },
+                WinnersPage: {
+                    type: "object",
+                    properties: {
+                        sucess: { type: "boolean" },
+                        message: { type: "string" },
+                        data: {
+                            type: "array",
+                            items: { $ref: "#/components/schemas/Winner" },
+                        },
+                        pagination: {
+                            type: "object",
+                            properties: {
+                                page: { type: "number" },
+                                limit: { type: "number" },
+                                total: { type: "number" },
+                                totalPages: { type: "number" },
+                            },
+                        },
+                    },
+                },
+            },
+        },
     },
-    apis: ["./src/routes/*.ts", "./src/models/*.ts", "./src/controllers/*.ts"],
+    apis: [
+        "./src/routes/*.ts",
+        "./src/models/*.ts",
+        "./src/controllers/*.ts",
+        "./src/features/**/*.ts",
+    ],
 });

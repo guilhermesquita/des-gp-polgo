@@ -1,18 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetWinnerController = void 0;
+const bad_request_error_1 = require("../../../errors/bad-request-error");
 class GetWinnerController {
-    constructor(getWinners) {
+    constructor(getWinners, validation) {
         this.getWinners = getWinners;
+        this.validation = validation;
     }
-    async handle(req, res) {
+    async handle(req, res, next) {
         try {
-            const { page = "1", limit = "10", orderBy = "asc", order = "name", nome, estado, premio, } = req.query;
+            const erro = this.validation.validate(req.query);
+            if (erro) {
+                throw new bad_request_error_1.BadRequestError(erro.message);
+            }
+            const { page = "1", limit = "10", order = "asc", nome, estado, premio, } = req.query;
             const winners = await this.getWinners.pageable({
                 pageable: {
                     page: Number(page) || 1,
                     limit: Number(limit) || 10,
-                    orderBy: String(orderBy),
                     order: String(order),
                 },
                 filters: {
@@ -25,7 +30,7 @@ class GetWinnerController {
         }
         catch (err) {
             console.error("Error fetching winners", err);
-            return res.status(500).json({ message: "Internal server error" });
+            return next(err);
         }
     }
 }

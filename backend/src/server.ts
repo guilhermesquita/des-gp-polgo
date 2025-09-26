@@ -10,7 +10,8 @@ async function start() {
   // runSeeds();
 
   app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Documentation Swagger in http://localhost:${PORT}/api/docs`);
   });
 }
 

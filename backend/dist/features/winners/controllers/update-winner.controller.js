@@ -5,7 +5,7 @@ class UpdateWinnerController {
     constructor(updateWinner) {
         this.updateWinner = updateWinner;
     }
-    async handle(req, res) {
+    async handle(req, res, next) {
         try {
             const { id } = req.params;
             const { nome, estado, cidade, premio, data } = req.body;
@@ -23,8 +23,7 @@ class UpdateWinnerController {
             return res.json(result);
         }
         catch (err) {
-            console.error("Error updating winner", err);
-            return res.status(500).json({ message: "Internal server error" });
+            return next(err);
         }
     }
 }

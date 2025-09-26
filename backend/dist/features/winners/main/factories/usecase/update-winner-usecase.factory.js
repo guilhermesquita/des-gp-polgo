@@ -5,6 +5,6 @@ const update_winner_usecase_1 = require("../../../domain/usecase/update-winner.u
 const winner_repository_1 = require("../../../repository/winner.repository");
 const updateWinnerFactory = () => {
     const winnerRepository = new winner_repository_1.WinnerRepository();
-    return new update_winner_usecase_1.UpdateWinnerUsecase(winnerRepository);
+    return new update_winner_usecase_1.UpdateWinnerUsecase(winnerRepository, winnerRepository);
 };
 exports.updateWinnerFactory = updateWinnerFactory;

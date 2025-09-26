@@ -7,7 +7,7 @@ exports.WinnerRepository = void 0;
 const winner_model_1 = __importDefault(require("../domain/model/winner.model"));
 class WinnerRepository {
     async pageable(params) {
-        const { page = 1, limit = 10, orderBy = "asc", order = "name", } = params.pageable;
+        const { page = 1, limit = 10, order = "ASC" } = params.pageable;
         const { nome, estado, premio } = params.filters || {};
         const skip = (page - 1) * limit;
         const query = {};
@@ -19,7 +19,7 @@ class WinnerRepository {
             query.premio = premio;
         const winners = await winner_model_1.default
             .find(query)
-            .sort({ [order]: orderBy === "asc" ? 1 : -1 })
+            .sort({ [order]: order === "ASC" ? 1 : -1 })
             .skip(skip)
             .limit(limit)
             .lean();
@@ -63,12 +63,9 @@ class WinnerRepository {
             updateData.premio = premio;
         if (data !== undefined)
             updateData.data = data;
-        const updated = await winner_model_1.default.findByIdAndUpdate(id, updateData, {
+        await winner_model_1.default.findByIdAndUpdate(id, updateData, {
             new: true,
         });
-        if (!updated) {
-            return { sucess: false, message: "Registro não encontrado" };
-        }
         return { sucess: true, message: "Dados atualizados com sucesso" };
     }
     async delete(params) {
@@ -78,6 +75,10 @@ class WinnerRepository {
             return { sucess: false, message: "Registro não encontrado" };
         }
         return { sucess: true, message: "Registro removido com sucesso" };
+    }
+    async check(id) {
+        const winner = await winner_model_1.default.findById(id);
+        return !!winner;
     }
 }
 exports.WinnerRepository = WinnerRepository;

@@ -5,7 +5,7 @@ class DeleteWinnerController {
     constructor(deleteWinner) {
         this.deleteWinner = deleteWinner;
     }
-    async handle(req, res) {
+    async handle(req, res, next) {
         try {
             const { id } = req.params;
             const result = await this.deleteWinner.delete({ id });
@@ -15,8 +15,7 @@ class DeleteWinnerController {
             return res.json(result);
         }
         catch (err) {
-            console.error("Error deleting winner", err);
-            return res.status(500).json({ message: "Internal server error" });
+            return next(err);
         }
     }
 }
