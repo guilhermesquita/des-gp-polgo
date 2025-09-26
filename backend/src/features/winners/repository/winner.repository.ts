@@ -3,19 +3,20 @@ import { GetWinnersPageable } from "../domain/contracts/get-winners-pageable";
 import { UpdateWinner } from "../domain/contracts/update-winner";
 import { DeleteWinner } from "../domain/contracts/delete-winner";
 import winnerModel from "../domain/model/winner.model";
+import { CheckWinnerById } from "../domain/contracts/check-winner-by-id";
 
 export class WinnerRepository
-  implements GetWinnersPageable, CreateWinner, UpdateWinner, DeleteWinner
+  implements
+    GetWinnersPageable,
+    CreateWinner,
+    UpdateWinner,
+    DeleteWinner,
+    CheckWinnerById
 {
   async pageable(
     params: GetWinnersPageable.Params
   ): Promise<GetWinnersPageable.Result> {
-    const {
-      page = 1,
-      limit = 10,
-      orderBy = "asc",
-      order = "name",
-    } = params.pageable;
+    const { page = 1, limit = 10, order = "ASC" } = params.pageable;
 
     const { nome, estado, premio } = params.filters || {};
 
@@ -28,7 +29,7 @@ export class WinnerRepository
 
     const winners = await winnerModel
       .find(query)
-      .sort({ [order]: orderBy === "asc" ? 1 : -1 })
+      .sort({ [order]: order === "ASC" ? 1 : -1 })
       .skip(skip)
       .limit(limit)
       .lean();
@@ -75,13 +76,9 @@ export class WinnerRepository
     if (premio !== undefined) updateData.premio = premio;
     if (data !== undefined) updateData.data = data;
 
-    const updated = await winnerModel.findByIdAndUpdate(id, updateData, {
+    await winnerModel.findByIdAndUpdate(id, updateData, {
       new: true,
     });
-
-    if (!updated) {
-      return { sucess: false, message: "Registro não encontrado" };
-    }
 
     return { sucess: true, message: "Dados atualizados com sucesso" };
   }
@@ -96,5 +93,10 @@ export class WinnerRepository
     }
 
     return { sucess: true, message: "Registro removido com sucesso" };
+  }
+
+  async check(id: string): Promise<boolean> {
+    const winner = await winnerModel.findById(id);
+    return !!winner;
   }
 }

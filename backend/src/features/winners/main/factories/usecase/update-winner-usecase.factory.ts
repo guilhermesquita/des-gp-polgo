@@ -4,5 +4,5 @@ import { WinnerRepository } from "../../../repository/winner.repository";
 
 export const updateWinnerFactory = (): UpdateWinner => {
   const winnerRepository = new WinnerRepository();
-  return new UpdateWinnerUsecase(winnerRepository);
+  return new UpdateWinnerUsecase(winnerRepository, winnerRepository);
 };

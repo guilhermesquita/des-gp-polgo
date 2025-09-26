@@ -15,7 +15,6 @@ export namespace GetWinnersPageable {
   export type Pageable = {
     page?: number;
     limit?: number;
-    orderBy: string;
     order: string;
   };
 

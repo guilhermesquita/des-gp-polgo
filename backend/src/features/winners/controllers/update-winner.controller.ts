@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { UpdateWinner } from "../domain/contracts/update-winner";
 
 export class UpdateWinnerController {
   constructor(readonly updateWinner: UpdateWinner) {}
 
-  async handle(req: Request, res: Response) {
+  async handle(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
       const { nome, estado, cidade, premio, data } = req.body;
@@ -24,8 +24,7 @@ export class UpdateWinnerController {
 
       return res.json(result);
     } catch (err) {
-      console.error("Error updating winner", err);
-      return res.status(500).json({ message: "Internal server error" });
+      return next(err);
     }
   }
 }

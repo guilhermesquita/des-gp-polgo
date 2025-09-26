@@ -4,5 +4,5 @@ import { WinnerRepository } from "../../../repository/winner.repository";
 
 export const deleteWinnerFactory = (): DeleteWinner => {
   const winnerRepository = new WinnerRepository();
-  return new DeleteWinnerUsecase(winnerRepository);
+  return new DeleteWinnerUsecase(winnerRepository, winnerRepository);
 };

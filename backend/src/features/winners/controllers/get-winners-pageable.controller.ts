@@ -1,16 +1,26 @@
 import { Request, Response } from "express";
 import { GetWinnersPageable } from "../domain/contracts/get-winners-pageable";
+import { NextFunction } from "express-serve-static-core";
+import { Validation } from "../../../config/contracts/validation";
+import { BadRequestError } from "../../../errors/bad-request-error";
 
 export class GetWinnerController {
-  constructor(readonly getWinners: GetWinnersPageable) {}
+  constructor(
+    readonly getWinners: GetWinnersPageable,
+    private readonly validation: Validation
+  ) {}
 
-  async handle(req: Request, res: Response) {
+  async handle(req: Request, res: Response, next: NextFunction) {
     try {
+      const erro = this.validation.validate(req.query);
+      if (erro) {
+        throw new BadRequestError(erro.message);
+      }
+
       const {
         page = "1",
         limit = "10",
-        orderBy = "asc",
-        order = "name",
+        order = "asc",
         nome,
         estado,
         premio,
@@ -20,8 +30,7 @@ export class GetWinnerController {
         pageable: {
           page: Number(page) || 1,
           limit: Number(limit) || 10,
-          orderBy: String(orderBy) as "asc" | "desc",
-          order: String(order),
+          order: String(order) as "asc" | "desc",
         },
         filters: {
           nome: nome ? String(nome) : undefined,
@@ -33,7 +42,7 @@ export class GetWinnerController {
       return res.json(winners);
     } catch (err) {
       console.error("Error fetching winners", err);
-      return res.status(500).json({ message: "Internal server error" });
+      return next(err);
     }
   }
 }
