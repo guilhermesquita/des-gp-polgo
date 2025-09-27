@@ -69,6 +69,8 @@ router.get("/", (req, res, next) =>
  *     tags:
  *       - Lojas
  *     summary: Cria uma nova loja
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -117,6 +119,8 @@ router.post("/", authMiddleware, (req, res, next) =>
  *   put:
  *     tags:
  *       - Lojas
+ *     security:
+ *       - bearerAuth: []
  *     summary: Atualiza uma loja por id
  *     parameters:
  *       - in: path
@@ -148,6 +152,8 @@ router.put("/:id", authMiddleware, (req, res, next) =>
  *   delete:
  *     tags:
  *       - Lojas
+ *     security:
+ *       - bearerAuth: []
  *     summary: Remove uma loja por id
  *     parameters:
  *       - in: path

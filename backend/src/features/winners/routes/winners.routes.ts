@@ -100,6 +100,8 @@ router.get("/", (req, res, next) =>
  * /api/ganhadores/:
  *   post:
  *     tags: [Winners]
+ *     security:
+ *       - bearerAuth: []
  *     summary: Create a new winner
  *     requestBody:
  *       required: true
@@ -129,6 +131,8 @@ router.post("/", authMiddleware, (req, res, next) =>
  * /api/ganhadores/{id}:
  *   put:
  *     tags: [Winners]
+ *     security:
+ *       - bearerAuth: []
  *     summary: Update an existing winner by id
  *     parameters:
  *       - in: path
@@ -166,6 +170,8 @@ router.put("/:id", authMiddleware, (req, res, next) =>
  * /api/ganhadores/{id}:
  *   delete:
  *     tags: [Winners]
+ *     security:
+ *       - bearerAuth: []
  *     summary: Delete a winner by id
  *     parameters:
  *       - in: path
