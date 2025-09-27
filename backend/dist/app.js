@@ -8,6 +8,7 @@ const cors_1 = __importDefault(require("cors"));
 const morgan_1 = __importDefault(require("morgan"));
 const winners_routes_1 = __importDefault(require("./features/winners/routes/winners.routes"));
 const admin_routes_1 = __importDefault(require("./features/admin/routes/admin.routes"));
+const stores_routes_1 = __importDefault(require("./features/stores/routes/stores.routes"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_1 = require("./swagger");
 const errorHandler_1 = require("./middlewares/errorHandler");
@@ -17,6 +18,7 @@ app.use((0, morgan_1.default)("dev"));
 app.use(express_1.default.json());
 app.use("/api/ganhadores/", winners_routes_1.default);
 app.use("/api/admin/", admin_routes_1.default);
+app.use("/api/lojas/", stores_routes_1.default);
 app.use("/api/docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.swaggerSpec));
 app.get("/", (_req, res) => res.json({ ok: true }));
 // global error handler

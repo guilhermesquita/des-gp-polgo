@@ -202,5 +202,5 @@ router.delete("/:id", auth_middleware_1.authMiddleware, (req, res, next) => dele
  *                       total:
  *                         type: integer
  */
-router.get("/agregacao", (req, res, next) => aggregateWinnersByStateController.handle(req, res));
+router.get("/agregacao", (req, res, next) => aggregateWinnersByStateController.handle(req, res, next));
 exports.default = router;

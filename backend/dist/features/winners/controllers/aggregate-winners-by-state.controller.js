@@ -5,14 +5,13 @@ class AggregateWinnersByStateController {
     constructor(aggregateWinners) {
         this.aggregateWinners = aggregateWinners;
     }
-    async handle(_req, res) {
+    async handle(_req, res, next) {
         try {
             const result = await this.aggregateWinners.aggregate();
             return res.json(result);
         }
         catch (err) {
-            console.error("Error aggregating winners by state", err);
-            return res.status(500).json({ message: "Internal server error" });
+            return next(err);
         }
     }
 }

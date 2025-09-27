@@ -219,7 +219,7 @@ router.delete("/:id", authMiddleware, (req, res, next) =>
  *                         type: integer
  */
 router.get("/agregacao", (req, res, next) =>
-  aggregateWinnersByStateController.handle(req, res)
+  aggregateWinnersByStateController.handle(req, res, next)
 );
 
 export default router;

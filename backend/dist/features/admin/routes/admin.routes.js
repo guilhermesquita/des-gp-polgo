@@ -32,7 +32,7 @@ const loginController = (0, login_admin_controller_factory_1.makeLoginAdminContr
  *                 message:
  *                   type: string
  */
-router.post("/register", (req, res) => registerController.handle(req, res));
+router.post("/register", (req, res, next) => registerController.handle(req, res, next));
 /**
  * @openapi
  * /api/admin/login:
@@ -53,7 +53,7 @@ router.post("/register", (req, res) => registerController.handle(req, res));
  *             schema:
  *               $ref: '#/components/schemas/AuthResponse'
  */
-router.post("/login", (req, res) => loginController.handle(req, res));
+router.post("/login", (req, res, next) => loginController.handle(req, res, next));
 /**
  * @openapi
  * /api/admin/profile:
@@ -75,7 +75,12 @@ router.post("/login", (req, res) => loginController.handle(req, res));
  *                 user:
  *                   type: object
  */
-router.get("/profile", auth_middleware_1.authMiddleware, (req, res) => {
-    return res.json({ sucess: true, user: req.user });
+router.get("/profile", auth_middleware_1.authMiddleware, (req, res, next) => {
+    try {
+        return res.json({ sucess: true, user: req.user });
+    }
+    catch (err) {
+        return next(err);
+    }
 });
 exports.default = router;

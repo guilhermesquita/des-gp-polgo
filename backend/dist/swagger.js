@@ -83,6 +83,35 @@ exports.swaggerSpec = (0, swagger_jsdoc_1.default)({
                         message: { type: "string" },
                     },
                 },
+                Store: {
+                    type: "object",
+                    properties: {
+                        _id: { type: "string" },
+                        nome: { type: "string" },
+                        cnpj: { type: "string" },
+                        estado: { type: "string" },
+                        cidade: { type: "string" },
+                        endereco: { type: "string" },
+                        location: {
+                            type: "object",
+                            properties: { lat: { type: "number" }, lng: { type: "number" } },
+                        },
+                        createdAt: { type: "string", format: "date-time" },
+                        updatedAt: { type: "string", format: "date-time" },
+                    },
+                    required: ["nome", "cnpj", "estado", "cidade", "endereco"],
+                },
+                StoresPage: {
+                    type: "object",
+                    properties: {
+                        sucess: { type: "boolean" },
+                        data: {
+                            type: "array",
+                            items: { $ref: "#/components/schemas/Store" },
+                        },
+                        message: { type: "string" },
+                    },
+                },
             },
         },
     },

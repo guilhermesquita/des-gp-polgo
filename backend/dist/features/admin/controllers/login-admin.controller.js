@@ -5,7 +5,7 @@ class LoginAdminController {
     constructor(authenticateAdmin) {
         this.authenticateAdmin = authenticateAdmin;
     }
-    async handle(req, res) {
+    async handle(req, res, next) {
         try {
             const { email, password } = req.body;
             const result = await this.authenticateAdmin.authenticate({
@@ -17,8 +17,7 @@ class LoginAdminController {
             return res.json(result);
         }
         catch (err) {
-            console.error(err);
-            return res.status(500).json({ message: "Internal server error" });
+            return next(err);
         }
     }
 }

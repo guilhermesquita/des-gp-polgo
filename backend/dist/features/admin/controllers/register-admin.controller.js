@@ -5,7 +5,7 @@ class RegisterAdminController {
     constructor(createAdmin) {
         this.createAdmin = createAdmin;
     }
-    async handle(req, res) {
+    async handle(req, res, next) {
         try {
             const { email, password } = req.body;
             const result = await this.createAdmin.create({ email, password });
@@ -14,8 +14,7 @@ class RegisterAdminController {
             return res.json(result);
         }
         catch (err) {
-            console.error(err);
-            return res.status(500).json({ message: "Internal server error" });
+            return next(err);
         }
     }
 }
