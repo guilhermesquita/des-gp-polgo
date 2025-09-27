@@ -4,6 +4,7 @@ import { makeUpdateWinnerController } from "../main/factories/controller/update-
 import { makeDeleteWinnerController } from "../main/factories/controller/delete-winner-controller.factory";
 import { makeCreateWinnerController } from "../main/factories/controller/create-winner-controller.factory";
 import { makeAggregateWinnersByStateController } from "../main/factories/controller/aggregate-winners-by-state-controller.factory";
+import { authMiddleware } from "../../../middlewares/auth.middleware";
 
 /**
  * @openapi
@@ -42,7 +43,7 @@ const router = Router();
 
 /**
  * @openapi
- * /api/winners/:
+ * /api/ganhadores/:
  *   get:
  *     tags: [Winners]
  *     summary: Get pageable list of winners
@@ -96,7 +97,7 @@ router.get("/", (req, res, next) =>
 
 /**
  * @openapi
- * /api/winners/:
+ * /api/ganhadores/:
  *   post:
  *     tags: [Winners]
  *     summary: Create a new winner
@@ -119,13 +120,13 @@ router.get("/", (req, res, next) =>
  *                 message:
  *                   type: string
  */
-router.post("/", (req, res, next) =>
+router.post("/", authMiddleware, (req, res, next) =>
   createWinnerController.handle(req, res, next)
 );
 
 /**
  * @openapi
- * /api/winners/{id}:
+ * /api/ganhadores/{id}:
  *   put:
  *     tags: [Winners]
  *     summary: Update an existing winner by id
@@ -156,13 +157,13 @@ router.post("/", (req, res, next) =>
  *       404:
  *         description: Not found
  */
-router.put("/:id", (req, res, next) =>
+router.put("/:id", authMiddleware, (req, res, next) =>
   updateWinnerController.handle(req, res, next)
 );
 
 /**
  * @openapi
- * /api/winners/{id}:
+ * /api/ganhadores/{id}:
  *   delete:
  *     tags: [Winners]
  *     summary: Delete a winner by id
@@ -187,13 +188,13 @@ router.put("/:id", (req, res, next) =>
  *       404:
  *         description: Not found
  */
-router.delete("/:id", (req, res, next) =>
+router.delete("/:id", authMiddleware, (req, res, next) =>
   deleteWinnerController.handle(req, res, next)
 );
 
 /**
  * @openapi
- * /api/winners/ganhadores/agregacao:
+ * /api/ganhadores/agregacao:
  *   get:
  *     tags: [Winners]
  *     summary: Aggregate winners by state (UF)

@@ -15,6 +15,13 @@ exports.swaggerSpec = (0, swagger_jsdoc_1.default)({
         },
         servers: [{ url: "http://localhost:3000", description: "Local server" }],
         components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: "http",
+                    scheme: "bearer",
+                    bearerFormat: "JWT",
+                },
+            },
             schemas: {
                 Winner: {
                     type: "object",
@@ -48,6 +55,32 @@ exports.swaggerSpec = (0, swagger_jsdoc_1.default)({
                                 totalPages: { type: "number" },
                             },
                         },
+                    },
+                },
+                Admin: {
+                    type: "object",
+                    properties: {
+                        _id: { type: "string" },
+                        email: { type: "string" },
+                        createdAt: { type: "string", format: "date-time" },
+                        updatedAt: { type: "string", format: "date-time" },
+                    },
+                    required: ["email"],
+                },
+                AdminAuthRequest: {
+                    type: "object",
+                    properties: {
+                        email: { type: "string" },
+                        password: { type: "string" },
+                    },
+                    required: ["email", "password"],
+                },
+                AuthResponse: {
+                    type: "object",
+                    properties: {
+                        sucess: { type: "boolean" },
+                        token: { type: "string" },
+                        message: { type: "string" },
                     },
                 },
             },
