@@ -1,5 +1,5 @@
-import { AuthenticateAdmin } from "../../../../../features/admin/domain/contracts/authenticate-admin";
 import { describe, it, expect, beforeEach } from "@jest/globals";
+import { AuthenticateAdmin } from "../../../../../../features/admin/domain/contracts/authenticate-admin";
 
 describe("AuthenticateAdmin contract (unit)", () => {
   let auth: AuthenticateAdmin;

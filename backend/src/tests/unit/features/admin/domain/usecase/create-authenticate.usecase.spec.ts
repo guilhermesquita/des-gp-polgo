@@ -1,6 +1,6 @@
-import { CreateAdminUsecase } from "../../../../../features/admin/domain/usecase/create-admin.usecase";
-import { AuthenticateAdminUsecase } from "../../../../../features/admin/domain/usecase/authenticate-admin.usecase";
 import { describe, it, expect, beforeEach } from "@jest/globals";
+import { CreateAdminUsecase } from "../../../../../../features/admin/domain/usecase/create-admin.usecase";
+import { AuthenticateAdminUsecase } from "../../../../../../features/admin/domain/usecase/authenticate-admin.usecase";
 
 describe("Admin usecases (unit)", () => {
   it("CreateAdminUsecase should delegate to createAdmin", async () => {
