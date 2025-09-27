@@ -11,7 +11,7 @@ exports.swaggerSpec = (0, swagger_jsdoc_1.default)({
         info: {
             title: "Polgo API",
             version: "0.1.0",
-            description: "API documentation for Polgo backend",
+            description: "API documentation for Grupo Polgo backend",
         },
         servers: [{ url: "http://localhost:3000", description: "Local server" }],
         components: {

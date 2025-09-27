@@ -80,5 +80,19 @@ class WinnerRepository {
         const winner = await winner_model_1.default.findById(id);
         return !!winner;
     }
+    async aggregate() {
+        const result = await winner_model_1.default
+            .aggregate([
+            { $group: { _id: "$estado", total: { $sum: 1 } } },
+            { $project: { estado: "$_id", total: 1, _id: 0 } },
+            { $sort: { estado: 1 } },
+        ])
+            .exec();
+        return {
+            sucess: true,
+            data: result.map((r) => ({ estado: r.estado, total: r.total })),
+            message: "Agrupamento por estado realizado com sucesso",
+        };
+    }
 }
 exports.WinnerRepository = WinnerRepository;

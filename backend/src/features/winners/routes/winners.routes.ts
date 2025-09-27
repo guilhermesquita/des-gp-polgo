@@ -3,6 +3,7 @@ import { makeGetWinnersPageableController } from "../main/factories/controller/g
 import { makeUpdateWinnerController } from "../main/factories/controller/update-winner-controller.factory";
 import { makeDeleteWinnerController } from "../main/factories/controller/delete-winner-controller.factory";
 import { makeCreateWinnerController } from "../main/factories/controller/create-winner-controller.factory";
+import { makeAggregateWinnersByStateController } from "../main/factories/controller/aggregate-winners-by-state-controller.factory";
 
 /**
  * @openapi
@@ -86,6 +87,8 @@ const getWinnersPageableController = makeGetWinnersPageableController();
 const createWinnerController = makeCreateWinnerController();
 const updateWinnerController = makeUpdateWinnerController();
 const deleteWinnerController = makeDeleteWinnerController();
+const aggregateWinnersByStateController =
+  makeAggregateWinnersByStateController();
 
 router.get("/", (req, res, next) =>
   getWinnersPageableController.handle(req, res, next)
@@ -186,6 +189,36 @@ router.put("/:id", (req, res, next) =>
  */
 router.delete("/:id", (req, res, next) =>
   deleteWinnerController.handle(req, res, next)
+);
+
+/**
+ * @openapi
+ * /api/winners/ganhadores/agregacao:
+ *   get:
+ *     tags: [Winners]
+ *     summary: Aggregate winners by state (UF)
+ *     responses:
+ *       200:
+ *         description: Aggregation result
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 sucess:
+ *                   type: boolean
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       estado:
+ *                         type: string
+ *                       total:
+ *                         type: integer
+ */
+router.get("/agregacao", (req, res, next) =>
+  aggregateWinnersByStateController.handle(req, res)
 );
 
 export default router;

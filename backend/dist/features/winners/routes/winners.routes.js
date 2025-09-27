@@ -5,6 +5,7 @@ const get_winners_pageable_controller_factory_1 = require("../main/factories/con
 const update_winner_controller_factory_1 = require("../main/factories/controller/update-winner-controller.factory");
 const delete_winner_controller_factory_1 = require("../main/factories/controller/delete-winner-controller.factory");
 const create_winner_controller_factory_1 = require("../main/factories/controller/create-winner-controller.factory");
+const aggregate_winners_by_state_controller_factory_1 = require("../main/factories/controller/aggregate-winners-by-state-controller.factory");
 /**
  * @openapi
  * tags:
@@ -84,6 +85,7 @@ const getWinnersPageableController = (0, get_winners_pageable_controller_factory
 const createWinnerController = (0, create_winner_controller_factory_1.makeCreateWinnerController)();
 const updateWinnerController = (0, update_winner_controller_factory_1.makeUpdateWinnerController)();
 const deleteWinnerController = (0, delete_winner_controller_factory_1.makeDeleteWinnerController)();
+const aggregateWinnersByStateController = (0, aggregate_winners_by_state_controller_factory_1.makeAggregateWinnersByStateController)();
 router.get("/", (req, res, next) => getWinnersPageableController.handle(req, res, next));
 /**
  * @openapi
@@ -173,4 +175,31 @@ router.put("/:id", (req, res, next) => updateWinnerController.handle(req, res, n
  *         description: Not found
  */
 router.delete("/:id", (req, res, next) => deleteWinnerController.handle(req, res, next));
+/**
+ * @openapi
+ * /api/winners/ganhadores/agregacao:
+ *   get:
+ *     tags: [Winners]
+ *     summary: Aggregate winners by state (UF)
+ *     responses:
+ *       200:
+ *         description: Aggregation result
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 sucess:
+ *                   type: boolean
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       estado:
+ *                         type: string
+ *                       total:
+ *                         type: integer
+ */
+router.get("/ganhadores/agregacao", (req, res, next) => aggregateWinnersByStateController.handle(req, res));
 exports.default = router;

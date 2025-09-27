@@ -1,6 +1,6 @@
-import { NotFoundError } from "../../../../errors/not-found-error";
-import { CheckWinnerById } from "../contracts/check-winner-by-id";
-import { UpdateWinner } from "../contracts/update-winner.spec";
+import { NotFoundError } from "../../../../../../errors/not-found-error";
+import { CheckWinnerById } from "../../../../../../features/winners/domain/contracts/check-winner-by-id";
+import { UpdateWinner } from "../../../../../../features/winners/domain/contracts/update-winner";
 
 export class UpdateWinnerUsecase implements UpdateWinner {
   constructor(

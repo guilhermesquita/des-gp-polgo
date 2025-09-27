@@ -3,6 +3,7 @@ import { GetWinnersPageable } from "../domain/contracts/get-winners-pageable";
 import { UpdateWinner } from "../domain/contracts/update-winner";
 import { DeleteWinner } from "../domain/contracts/delete-winner";
 import winnerModel from "../domain/model/winner.model";
+import { AggregateWinnersByState } from "../domain/contracts/aggregate-winners-by-state";
 import { CheckWinnerById } from "../domain/contracts/check-winner-by-id";
 
 export class WinnerRepository
@@ -98,5 +99,31 @@ export class WinnerRepository
   async check(id: string): Promise<boolean> {
     const winner = await winnerModel.findById(id);
     return !!winner;
+  }
+
+  async aggregate(): Promise<AggregateWinnersByState.Result> {
+    const result = await winnerModel
+      .aggregate([
+        {
+          $group: {
+            _id: "$estado",
+            total: { $sum: 1 },
+            vencedores: { $push: "$nome" },
+          },
+        },
+        { $project: { estado: "$_id", total: 1, vencedores: 1, _id: 0 } },
+        { $sort: { estado: 1 } },
+      ])
+      .exec();
+
+    return {
+      sucess: true,
+      data: result.map((r: any) => ({
+        estado: r.estado,
+        total: r.total,
+        vencedores: r.vencedores,
+      })),
+      message: "Agrupamento por estado realizado com sucesso",
+    };
   }
 }

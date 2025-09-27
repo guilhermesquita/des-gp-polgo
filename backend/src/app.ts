@@ -12,7 +12,7 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 
-app.use("/api/winners/", winnersRouter);
+app.use("/api/ganhadores/", winnersRouter);
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
