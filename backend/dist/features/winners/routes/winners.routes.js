@@ -41,7 +41,7 @@ const auth_middleware_1 = require("../../../middlewares/auth.middleware");
 const router = (0, express_1.Router)();
 /**
  * @openapi
- * /api/winners/:
+ * /api/ganhadores/:
  *   get:
  *     tags: [Winners]
  *     summary: Get pageable list of winners
@@ -90,7 +90,7 @@ const aggregateWinnersByStateController = (0, aggregate_winners_by_state_control
 router.get("/", (req, res, next) => getWinnersPageableController.handle(req, res, next));
 /**
  * @openapi
- * /api/winners/:
+ * /api/ganhadores/:
  *   post:
  *     tags: [Winners]
  *     summary: Create a new winner
@@ -116,7 +116,7 @@ router.get("/", (req, res, next) => getWinnersPageableController.handle(req, res
 router.post("/", auth_middleware_1.authMiddleware, (req, res, next) => createWinnerController.handle(req, res, next));
 /**
  * @openapi
- * /api/winners/{id}:
+ * /api/ganhadores/{id}:
  *   put:
  *     tags: [Winners]
  *     summary: Update an existing winner by id
@@ -150,7 +150,7 @@ router.post("/", auth_middleware_1.authMiddleware, (req, res, next) => createWin
 router.put("/:id", auth_middleware_1.authMiddleware, (req, res, next) => updateWinnerController.handle(req, res, next));
 /**
  * @openapi
- * /api/winners/{id}:
+ * /api/ganhadores/{id}:
  *   delete:
  *     tags: [Winners]
  *     summary: Delete a winner by id
@@ -178,7 +178,7 @@ router.put("/:id", auth_middleware_1.authMiddleware, (req, res, next) => updateW
 router.delete("/:id", auth_middleware_1.authMiddleware, (req, res, next) => deleteWinnerController.handle(req, res, next));
 /**
  * @openapi
- * /api/winners/ganhadores/agregacao:
+ * /api/ganhadores/agregacao:
  *   get:
  *     tags: [Winners]
  *     summary: Aggregate winners by state (UF)
