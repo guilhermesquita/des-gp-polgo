@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:6.0
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongo:27017/polgo
+      - JWT_SECRET=example_bf1f5e9c2a4d7b8f6c1e2a9b4d3f6c7e8a1
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    restart: on-failure
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    environment:
+      - VITE_API_URL=http://backend:3000/api
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: on-failure
+
+volumes:
+  mongo-data:
+    driver: local
