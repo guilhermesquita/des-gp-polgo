@@ -9,7 +9,6 @@ export namespace CreateStore {
     estado: string;
     cidade: string;
     endereco: string;
-    location?: { lat: number; lng: number };
   };
 
   export type Result = {

@@ -51,7 +51,6 @@ export class StoreRepository
       estado: params.estado,
       cidade: params.cidade,
       endereco: params.endereco,
-      location: params.location,
     });
 
     return { sucess: true, message: "Loja criada", data: created };

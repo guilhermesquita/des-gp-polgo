@@ -87,10 +87,6 @@ export const swaggerSpec = swaggerJSDoc({
             estado: { type: "string" },
             cidade: { type: "string" },
             endereco: { type: "string" },
-            location: {
-              type: "object",
-              properties: { lat: { type: "number" }, lng: { type: "number" } },
-            },
             createdAt: { type: "string", format: "date-time" },
             updatedAt: { type: "string", format: "date-time" },
           },

@@ -18,6 +18,7 @@ export class WinnerRepository
     params: GetWinnersPageable.Params
   ): Promise<GetWinnersPageable.Result> {
     const { page = 1, limit = 10, order = "ASC" } = params.pageable;
+    const sortBy = "data";
 
     const { nome, estado, premio } = params.filters || {};
 
@@ -25,12 +26,12 @@ export class WinnerRepository
 
     const query: any = {};
     if (nome) query.nome = { $regex: nome, $options: "i" };
-    if (estado) query.estado = estado;
-    if (premio) query.premio = premio;
+    if (estado) query.estado = { $regex: estado, $options: "i" };
+    if (premio) query.premio = { $regex: premio, $options: "i" };
 
     const winners = await winnerModel
       .find(query)
-      .sort({ [order]: order === "ASC" ? 1 : -1 })
+      .sort({ [sortBy]: order === "ASC" ? 1 : -1 })
       .skip(skip)
       .limit(limit)
       .lean();

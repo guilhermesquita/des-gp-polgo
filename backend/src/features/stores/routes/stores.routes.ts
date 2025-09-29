@@ -88,13 +88,6 @@ router.get("/", (req, res, next) =>
  *                 type: string
  *               endereco:
  *                 type: string
- *               location:
- *                 type: object
- *                 properties:
- *                   lat:
- *                     type: number
- *                   lng:
- *                     type: number
  *             required:
  *               - nome
  *               - cnpj
